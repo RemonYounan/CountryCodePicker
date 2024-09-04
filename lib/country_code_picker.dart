@@ -165,9 +165,9 @@ class CountryCodePicker extends StatefulWidget {
 
       for (var element in uppercaseCustomList) {
         elements.removeWhere((criteria) =>
-            element.contains(criteria.code!.toUpperCase()) ||
-            element.contains(criteria.name!.toUpperCase()) ||
-            element.contains(criteria.dialCode));
+            criteria.code!.toUpperCase() == element ||
+            criteria.dialCode == element ||
+            criteria.name!.toUpperCase() == element);
       }
     }
 
