@@ -163,13 +163,11 @@ class CountryCodePicker extends StatefulWidget {
       final uppercaseCustomList =
           excludeCountries!.map((c) => c.toUpperCase()).toList();
 
-      final index = elements.indexWhere(((c) =>
-          uppercaseCustomList.contains(c.code) ||
-          uppercaseCustomList.contains(c.name) ||
-          uppercaseCustomList.contains(c.dialCode)));
-
-      if (index >= 0) {
-        elements.removeAt(index);
+      for (var element in uppercaseCustomList) {
+        elements.removeWhere((criteria) =>
+            element.contains(criteria.code!.toUpperCase()) ||
+            element.contains(criteria.name!.toUpperCase()) ||
+            element.contains(criteria.dialCode));
       }
     }
 
