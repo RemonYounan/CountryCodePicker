@@ -47,6 +47,9 @@ class CountryCodePicker extends StatefulWidget {
   /// used to customize the country list
   final List<String>? countryFilter;
 
+  /// used to exclude some countries
+  final List<String>? excludeCountries;
+
   /// shows the name of the country instead of the dialcode
   final bool showOnlyCountryWhenClosed;
 
@@ -120,6 +123,7 @@ class CountryCodePicker extends StatefulWidget {
     this.boxDecoration,
     this.comparator,
     this.countryFilter,
+    this.excludeCountries,
     this.hideSearch = false,
     this.hideCloseIcon = false,
     this.showDropDownButton = false,
@@ -153,6 +157,20 @@ class CountryCodePicker extends StatefulWidget {
               uppercaseCustomList.contains(criteria.name) ||
               uppercaseCustomList.contains(criteria.dialCode))
           .toList();
+    }
+
+    if (excludeCountries != null && excludeCountries!.isNotEmpty) {
+      final uppercaseCustomList =
+          excludeCountries!.map((c) => c.toUpperCase()).toList();
+
+      final index = elements.indexWhere(((c) =>
+          uppercaseCustomList.contains(c.code) ||
+          uppercaseCustomList.contains(c.name) ||
+          uppercaseCustomList.contains(c.dialCode)));
+
+      if (index >= 0) {
+        elements.removeAt(index);
+      }
     }
 
     return CountryCodePickerState(elements);
